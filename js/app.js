@@ -1,12 +1,12 @@
 
 /*-------------------------------- Constants --------------------------------*/
-const board = document.querySelectorAll("#board>*")
-let winner=false
+const boardEl = document.querySelectorAll("#board>*")
+const messageEl = document.querySelector("#message")
+let winner = false
 let gameOver = false
 
-const columns=8
+const columns = 8
 const rows = 8
-
 
 /*---------------------------- Variables (state) ----------------------------*/
 
@@ -16,8 +16,8 @@ const rows = 8
 
 /*-------------------------------- Functions --------------------------------*/
 
-function init(){
-    gameBoard=[
+function init() {
+    gameBoard = [
         ["", "", "", "", "", "", "", ""],
         ["", "", "", "", "", "", "", ""],
         ["", "", "", "", "", "", "", ""],
@@ -27,75 +27,85 @@ function init(){
         ["", "", "", "", "", "", "", ""],
         ["", "", "", "", "", "", "", ""]
     ];
-    const boardElement = document.getElementById("board");
-    // for (let i=0;i<gameBoard.length;i++){
-    //     for (let j=0; j<gameBoard[i].length ;j++){
-    //         const box = document.createElement("div");
-    //         box.className = "box";
-    //         box.textContent = gameBoard[i][j];
-    //         boardElement.appendChild(box);
-    // }}
-    const board = document.querySelectorAll("#board>*")
+
+
     winner = false
     gameOver = false
     // render()
-    addMines(gameBoard,board)
+    addMines(gameBoard, boardEl)
+
 }
 init()
 
-
-function addMines(gameBoard,board) {
+function addMines(gameBoard, boardEl) {
     const mineCount = 10
     let mineAdded = 0
-    while (mineAdded < mineCount){
-        const randomRow = Math.floor(Math.random()*rows);
-        const randomColumn = Math.floor(Math.random()*columns);
-        if (gameBoard[randomRow][randomColumn]=== ""){
-            gameBoard[randomRow][randomColumn]="X";
-            mineAdded ++;
+    while (mineAdded < mineCount) {
+        const randomRow = Math.floor(Math.random() * rows);
+        const randomColumn = Math.floor(Math.random() * columns);
+        if (gameBoard[randomRow][randomColumn] === "") {
+            gameBoard[randomRow][randomColumn] = "X";
+            mineAdded++;
             const boxEl = document.getElementById(`${randomRow}-${randomColumn}`)
-            boxEl.innerText =gameBoard[randomRow][randomColumn]
-            for (let i = randomRow -1; i <= randomRow + 1 ; i++){
-                for (let j = randomColumn-1 ; j<=randomColumn+1; j++) {
-                    if (i>=0 && i<rows && j >= 0 && j<columns && gameBoard[i][j] !== "X"){
+            boxEl.classList.add("boxBomb");
+            boxEl.innerText = gameBoard[randomRow][randomColumn]
+            for (let i = randomRow - 1; i <= randomRow + 1; i++) {
+                for (let j = randomColumn - 1; j <= randomColumn + 1; j++) {
+                    if (i >= 0 && i < rows && j >= 0 && j < columns && gameBoard[i][j] !== "X") {
                         const boxElNum = document.getElementById(`${i}-${j}`)
-                        if (gameBoard[i][j] = ""){
+                        if (gameBoard[i][j] === "") {
+                            gameBoard[i][j] = 1;
                             boxElNum.innerText = 1
-                            
-                        }else{
-                            boxElNum.innerText ++
+                        } else {
+                            boxElNum.innerText++;
+                            gameBoard[i][j]++;
                         }
+
                     }
                 }
             }
         }
     }
 }
-console.log(gameBoard);
-// function checkIfBomb(event) {
-//     if (event.target.id.includes("bomb")){
-        
-//     }else{
-//         console.log("you ok");
-//     }
-// }
 
-// placeAMine()=>{
-//     -if the box contains a mine{
-//         return
-//     -else if the box = Number{
-//         erase the number
-//         put a mine, -1mine
-//         adjacentBlock ++}
-//     -elseif the box is empty && minecount>0 {
-//         put a mine, -1mine
-//         adjacentBlock ++}
-    
+function checkIfBomb(event) {
+    if (event.target.classList.contains("boxBomb")) {
+        gameOver = true
+        messageEl.innerText = "GAME OVER"
+        console.log("bomb!");
+        boardEl.forEach(square => {
+            square.removeEventListener('click', checkIfBomb)
+        });
+    }
+}
 
 
+function revealBox(event) {
+    checkIfBomb(event)
+    const rowIndex = (event.target.id).split("-")[0]
+    const columnIndex = (event.target.id).split("-")[1]
+    if (event.target.classList.contains("revealBox")) {
+        console.log(`REVEAL${event.target.id}`);
+        return
+    } else if ((event.target.innerText) >= 1) {
+        event.target.classList.add("revealBox")
+        console.log(`this is a number${event.target.id}`);
+        return
+    } else {
+        event.target.classList.add("revealBox")
+        for (let i = rowIndex - 1; i <= rowIndex + 1; i++) {
+            for (let j = columnIndex - 1; j <= columnIndex + 1; j++) {
+                if (i >= 0 && i < rows && j >= 0 && j < columns) {
+                    const nextBox = document.getElementById(`${i}-${j}`)
 
-
-// revealBox()=>{
+                    console.log(`empty box added class${event.target.id}`);
+                    revealBox(nextBox)
+                    // console.log("adding class");
+                }
+            }
+        }
+    }
+}
 //     -check <class reveald>
 //         return
 //     -check for Bomb = true
@@ -112,7 +122,7 @@ console.log(gameBoard);
 //                     revealBox()
 
 // /*----------------------------- Event Listeners -----------------------------*/
-// squares.forEach(square=>{
-//     square.addEventListener('click',checkIfBomb)
-// });
+boardEl.forEach(square => {
+    square.addEventListener('click', revealBox)
+});
 
