@@ -50,25 +50,28 @@ function addMines(gameBoard,board) {
     while (mineAdded < mineCount){
         const randomRow = Math.floor(Math.random()*rows);
         const randomColumn = Math.floor(Math.random()*columns);
-        if (randomRow!=0 && randomRow!=7 && randomColumn!=0 && randomColumn!=7 && gameBoard[randomRow][randomColumn]=== ""){
+        if (gameBoard[randomRow][randomColumn]=== ""){
             gameBoard[randomRow][randomColumn]="X";
             mineAdded ++;
             const boxEl = document.getElementById(`${randomRow}-${randomColumn}`)
-            boxEl.innerText = "X"
-            // for (let i = randomRow -1; i <= randomRow + 1 ; i++){
-            //     for (let j = randomColumn-1 ; j<=randomColumn+1; j++) {
-            //         if (gameBoard[i][j] === ""){
-            //             gameBoard[i][j] = 1;
-            //         }else{
-            //             gameBoard[i][j]++
-            //         }
-            //     }
-            // }
+            boxEl.innerText =gameBoard[randomRow][randomColumn]
+            for (let i = randomRow -1; i <= randomRow + 1 ; i++){
+                for (let j = randomColumn-1 ; j<=randomColumn+1; j++) {
+                    if (i>=0 && i<rows && j >= 0 && j<columns && gameBoard[i][j] !== "X"){
+                        const boxElNum = document.getElementById(`${i}-${j}`)
+                        if (gameBoard[i][j] = ""){
+                            boxElNum.innerText = 1
+                            
+                        }else{
+                            boxElNum.innerText ++
+                        }
+                    }
+                }
+            }
         }
     }
 }
-
-
+console.log(gameBoard);
 // function checkIfBomb(event) {
 //     if (event.target.id.includes("bomb")){
         
