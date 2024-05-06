@@ -100,27 +100,11 @@ function revealBox(event) {
 
                     console.log(`empty box added class${event.target.id}`);
                     revealBox(nextBox)
-                    // console.log("adding class");
                 }
             }
         }
     }
 }
-//     -check <class reveald>
-//         return
-//     -check for Bomb = true
-//         game over, return
-//     -check for number > 0
-//         add class reveald
-//         add class number
-//         return
-//     -if number = 0
-//    // checkAdjacentBloc= (x,y)
-//         if (x>0 && x<rows-1) && (x>0 && x<columns-1)
-//             for (i=x-1, i <= x + 1 , i++){
-//                 for (J=y-1, J=y+1, J++){
-//                     revealBox()
-
 // /*----------------------------- Event Listeners -----------------------------*/
 boardEl.forEach(square => {
     square.addEventListener('click', revealBox)
