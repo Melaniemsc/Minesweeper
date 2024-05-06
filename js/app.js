@@ -1,6 +1,6 @@
 
 /*-------------------------------- Constants --------------------------------*/
-const board = document.querySelectorAll(".box")
+const board = document.querySelectorAll("#board>*")
 let winner=false
 let gameOver = false
 
@@ -27,39 +27,38 @@ function init(){
         ["", "", "", "", "", "", "", ""],
         ["", "", "", "", "", "", "", ""]
     ];
-    boardElement = document.getElementById("board");
-    for (let i=0;i<gameBoard.length;i++){
-        for (let j=0; j<gameBoard[i].length ;j++){
-            const box = document.createElement("div");
-            box.className = "box";
-            box.textContent = gameBoard[i][j];
-            boardElement.appendChild(box);
-    }}
+    const boardElement = document.getElementById("board");
+    // for (let i=0;i<gameBoard.length;i++){
+    //     for (let j=0; j<gameBoard[i].length ;j++){
+    //         const box = document.createElement("div");
+    //         box.className = "box";
+    //         box.textContent = gameBoard[i][j];
+    //         boardElement.appendChild(box);
+    // }}
+    const board = document.querySelectorAll("#board>*")
     winner = false
     gameOver = false
     // render()
-    addMines(gameBoard)
+    addMines(gameBoard,board)
 }
 init()
 
 
-function addMines(gameBoard) {
+function addMines(gameBoard,board) {
     const mineCount = 10
     let mineAdded = 0
     while (mineAdded < mineCount){
         const randomRow = Math.floor(Math.random()*rows);
         const randomColumn = Math.floor(Math.random()*columns);
-        // console.log("randomRow " + randomRow + " randomColumn: " + randomColumn)
-        // console.log(gameBoard[randomRow][randomColumn]);
-
         if (randomRow!=0 && randomRow!=7 && randomColumn!=0 && randomColumn!=7 && gameBoard[randomRow][randomColumn]=== ""){
             gameBoard[randomRow][randomColumn]="X";
-            mineAdded = mineAdded+1;
-            console.log(gameBoard);
+            mineAdded ++;
+            const boxEl = document.getElementById(`${randomRow}-${randomColumn}`)
+            boxEl.innerText = "X"
             // for (let i = randomRow -1; i <= randomRow + 1 ; i++){
             //     for (let j = randomColumn-1 ; j<=randomColumn+1; j++) {
-            //         if (gameBoard[i][j]=== ""){
-            //             gameBoard[i][j]= 1
+            //         if (gameBoard[i][j] === ""){
+            //             gameBoard[i][j] = 1;
             //         }else{
             //             gameBoard[i][j]++
             //         }
