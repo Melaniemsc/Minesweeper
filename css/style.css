@@ -15,11 +15,23 @@
     font-size: 20px;
     text-align: center;
     aspect-ratio: 1;
+    
   }
-  .revealBox
-  
+  .revealBox{
+    background-color: pink;
+  }
+  .revealBoxNum{
+    background-color: blue;
+  }
+
   .boxBomb{
 
     background-color: black;
-}
+ }
+  .boxIgnore{
+    background-color: green;
+
+ }
+  
+
 

@@ -9,7 +9,7 @@ const columns = 8
 const rows = 8
 
 /*---------------------------- Variables (state) ----------------------------*/
-
+let gameBoard;
 /*------------------------ Cached Element References ------------------------*/
 
 
@@ -31,7 +31,6 @@ function init() {
 
     winner = false
     gameOver = false
-    // render()
     addMines(gameBoard, boardEl)
 
 }
@@ -68,45 +67,58 @@ function addMines(gameBoard, boardEl) {
     }
 }
 
-function checkIfBomb(event) {
-    if (event.target.classList.contains("boxBomb")) {
+function checkIfBomb(actualBox) {
+    if (actualBox.classList.contains("boxBomb")) {
         gameOver = true
         messageEl.innerText = "GAME OVER"
-        console.log("bomb!");
         boardEl.forEach(square => {
-            square.removeEventListener('click', checkIfBomb)
+            square.removeEventListener('click', boxClickHandler);
         });
+        return gameOver;
     }
 }
 
+function revealBox(eventId) {
+    // debugger
+    const rowIndex = parseInt((eventId).split("-")[0])
+    const columnIndex = parseInt((eventId).split("-")[1])
+    const actualBox = document.getElementById(`${rowIndex}-${columnIndex}`)
 
-function revealBox(event) {
-    checkIfBomb(event)
-    const rowIndex = (event.target.id).split("-")[0]
-    const columnIndex = (event.target.id).split("-")[1]
-    if (event.target.classList.contains("revealBox")) {
-        console.log(`REVEAL${event.target.id}`);
+    if (actualBox.classList.contains("boxBomb")) {
         return
-    } else if ((event.target.innerText) >= 1) {
-        event.target.classList.add("revealBox")
-        console.log(`this is a number${event.target.id}`);
+    } else if (actualBox.classList.contains("revealBox") || actualBox.classList.contains("revealBoxNum")) {
+        return
+    } else if ((actualBox.innerText) >= 1) {
+        actualBox.classList.add("revealBoxNum")
         return
     } else {
-        event.target.classList.add("revealBox")
+
+        actualBox.classList.add("revealBox")
         for (let i = rowIndex - 1; i <= rowIndex + 1; i++) {
             for (let j = columnIndex - 1; j <= columnIndex + 1; j++) {
                 if (i >= 0 && i < rows && j >= 0 && j < columns) {
                     const nextBox = document.getElementById(`${i}-${j}`)
+                    revealBox(nextBox.id)
 
-                    console.log(`empty box added class${event.target.id}`);
-                    revealBox(nextBox)
                 }
             }
         }
+
+    }
+
+}
+
+
+// /*----------------------------- Event Listeners -----------------------------*/
+function boxClickHandler(event) {
+
+    if (event.target.classList.contains("boxBomb")) {
+        checkIfBomb(event.target);
+    } else {
+        revealBox(event.target.id);
     }
 }
-// /*----------------------------- Event Listeners -----------------------------*/
-boardEl.forEach(square => {
-    square.addEventListener('click', revealBox)
-});
 
+boardEl.forEach(square => {
+    square.addEventListener('click', boxClickHandler);
+});
