@@ -10,10 +10,16 @@
 </head>
 
 <body>
+    <div id="container">
     <h1>Minesweeper</h1>
     <h2 id="message">message</h2>
-    
-    <section id="board">
+    <main>
+        <div id="score-board">
+            <h3 id="mines-left">10</h3>
+            <h3 id="timer">50S</h3>
+        </div>
+    <button id="reset">RESET</button>
+    <div class="begginer-board" id="board">
         <div class="box" id="0-0"></div>
         <div class="box" id="0-1"></div>
         <div class="box" id="0-2"></div>
@@ -78,8 +84,13 @@
         <div class="box" id="7-5"></div>
         <div class="box" id="7-6"></div>
         <div class="box" id="7-7"></div>
-        
-        
-    </section>
+    </div>
+</main>
+    <div class="levels">
+        <button id="begginer">BEGGINER</button>
+        <button id="intermediate">INTERMEDIATE</button>
+        <button id="advanced">ADVANCE</button>
+    </div>
+</div>
 </body>
 </html>
