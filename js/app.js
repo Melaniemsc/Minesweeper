@@ -1,17 +1,19 @@
 
 /*-------------------------------- Constants --------------------------------*/
-const boardEl = document.querySelectorAll("#board>*")
+const boardMainEl = document.getElementById("board")
 const messageEl = document.querySelector("#message")
 const resetButtonEl = document.querySelector("#reset");
 const minesLeftEl = document.querySelector("#mines-left")
 const timerEl = document.querySelector("#timer")
-const mineCount = 10
-
-const columns = 8
-const rows = 8
+const begginerButtonEl = document.getElementById("beginner")
+const intermediateButtonEl = document.getElementById("intermediate")
+const advanceButtonEl = document.getElementById("advance")
 
 /*---------------------------- Variables (state) ----------------------------*/
-let gameBoard;
+let mineCount
+let columns = 9
+let rows = 9
+let gameBoard
 let winner = false
 let gameOver = false
 let squaresReveal;
@@ -19,26 +21,39 @@ let flagCount = mineCount
 let timer
 let seconds
 let isFirstClick
+let boardElChilds
+
+
+
 /*------------------------ Cached Element References ------------------------*/
 
 
 
 /*-------------------------------- Functions --------------------------------*/
 
-function init() {
+function init(rows,columns,mineCount) {
     isFirstClick = true
     squaresReveal = 0;
-    gameBoard = [
-        ["", "", "", "", "", "", "", ""],
-        ["", "", "", "", "", "", "", ""],
-        ["", "", "", "", "", "", "", ""],
-        ["", "", "", "", "", "", "", ""],
-        ["", "", "", "", "", "", "", ""],
-        ["", "", "", "", "", "", "", ""],
-        ["", "", "", "", "", "", "", ""],
-        ["", "", "", "", "", "", "", ""]
-    ];
+    gameBoard = [];
+    if (boardElChilds) {
+        boardElChilds.forEach(square => {
+            square.remove()
+        })
+    }
 
+    for (let i = 0; i < rows; i++) {
+        gameBoard[i] = [];
+        for (let j = 0; j < columns; j++) {
+            gameBoard[i][j] = "";
+            const box = document.createElement("div");
+            box.className = "box";
+            box.id = `${i}-${j}`
+            box.textContent = gameBoard[i][j];
+            boardMainEl.appendChild(box);
+        }
+    }
+    boardMainEl.setAttribute('style','grid-template-columns: repeat(' + rows + ',calc(600px/' +rows+ ')');
+    boardElChilds = document.querySelectorAll("#board>*")
 
     winner = false
     gameOver = false
@@ -46,7 +61,7 @@ function init() {
     seconds = 0
     timerEl.innerText = "00"
     clearInterval(timer)
-    boardEl.forEach(square => {
+    boardElChilds.forEach(square => {
         square.innerText = "";
         square.classList.remove("revealBox", "revealedBomb", "flag", "explodedBomb", "bombDefused")
         square.addEventListener("contextmenu", function (e) { e.preventDefault(); })
@@ -55,7 +70,7 @@ function init() {
     })
     messageEl.innerText = "Try your luck"
     minesLeftEl.innerText = 10
-    addMines(gameBoard, boardEl)
+    addMines(gameBoard, boardElChilds)
 
 }
 init()
@@ -186,7 +201,7 @@ function setGameOver(event) {
     messageEl.innerText = "GAME OVER"
     event.target.classList.add("explodedBomb")
     clearInterval(timer)
-    boardEl.forEach(square => {
+    boardElChilds.forEach(square => {
         square.removeEventListener('contextmenu', boxClickHandler);
         square.removeEventListener('click', boxClickHandler);
         const rowIndex = parseInt((square.id).split("-")[0])
@@ -207,6 +222,38 @@ function increaseTimer() {
     timerEl.innerText = seconds
 }
 
+function setBegginer() {
+    rows = 9
+    columns = 9
+    mineCount = 10
+    boardMainEl.classList.remove("intermediate-board")
+    boardMainEl.classList.remove("advance-board")
+    boardMainEl.classList.add("beginner-board")
+    init(rows,columns,mineCount)
+}
+function setIntermediate() {
+    rows = 16
+    columns = 16
+    mineCount = 40
+    boardMainEl.classList.add("intermediate-board")
+    boardMainEl.classList.remove("advance-board")
+    boardMainEl.classList.remove("beginner-board")
+    init(rows,columns,mineCount)
+}
+function setAdvance() {
+    rows = 30
+    columns = 30
+    mineCount = 99
+    boardMainEl.classList.remove("intermediate-board")
+    boardMainEl.classList.add("advance-board")
+    boardMainEl.classList.remove("beginner-board")
+    init(rows,columns,mineCount)
+}
+
 // /*----------------------------- Event Listeners -----------------------------*/
 
 resetButtonEl.addEventListener('click', init)
+begginerButtonEl.addEventListener('click', setBegginer)
+intermediateButtonEl.addEventListener('click', setIntermediate)
+advanceButtonEl.addEventListener('click', setAdvance)
+

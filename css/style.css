@@ -36,9 +36,21 @@ main {
   color: purple
 }
 
+.beginner-board {
+  font-size: 50px;
+}
+
+.intermediate-board {
+  font-size: 36px;
+}
+
+.advance-board {
+  font-size: 18px;
+
+}
+
 #board {
   display: grid;
-  grid-template-columns: repeat(8, 50px);
   margin: 25px;
   border: 25px black;
   border-bottom: 10px solid #757575;
@@ -49,7 +61,7 @@ main {
 
 .box {
 
-  background: radial-gradient(circle, rgba(238,174,202,1) 0%, rgba(148,187,233,1) 100%);
+  background: radial-gradient(circle, rgba(238, 174, 202, 1) 0%, rgba(148, 187, 233, 1) 100%);
   border: 1px solid rgba(122, 120, 120, 0.748);
   text-align: center;
   aspect-ratio: 1;
@@ -60,7 +72,6 @@ main {
   display: flex;
   background: white;
   background-color: rgb(150, 150, 152);
-  font-size: 45px;
   text-align: center;
   justify-content: center;
 }
@@ -73,9 +84,10 @@ main {
   background-size: contain;
   text-align: center;
   justify-content: center;
-  
+
 }
-.explodedBomb{
+
+.explodedBomb {
   display: flex;
   background-color: purple;
   background-image: url('../assets/exploded.png');
@@ -83,7 +95,7 @@ main {
   background-size: contain;
   text-align: center;
   justify-content: center;
-  
+
 
 }
 
@@ -92,23 +104,26 @@ button {
   display: flex;
   flex-wrap: wrap;
 }
-.levels{
+
+.levels {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width:400px;
+  width: 400px;
 }
+
 .flag {
   display: flex;
-  background: purple;
+  background: rgb(163, 74, 163);
   background-image: url('../assets/Flag.png');
   background-repeat: no-repeat;
   background-size: contain;
   text-align: center;
   justify-content: center;
-  
+
 }
-.bombDefused{
+
+.bombDefused {
   display: flex;
   background: purple;
   background-image: url('../assets/ThumbsUp.png');
@@ -116,6 +131,6 @@ button {
   background-size: contain;
   text-align: center;
   justify-content: center;
-  
+
 
 }
