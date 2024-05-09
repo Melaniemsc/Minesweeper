@@ -11,13 +11,13 @@ const advanceButtonEl = document.getElementById("advance")
 
 /*---------------------------- Variables (state) ----------------------------*/
 let mineCount
-let columns = 9
-let rows = 9
+let columns
+let rows
 let gameBoard
 let winner = false
 let gameOver = false
 let squaresReveal;
-let flagCount = mineCount
+let flagCount;
 let timer
 let seconds
 let isFirstClick
@@ -31,36 +31,20 @@ let boardElChilds
 
 /*-------------------------------- Functions --------------------------------*/
 
-function init(rows,columns,mineCount) {
-    isFirstClick = true
-    squaresReveal = 0;
-    gameBoard = [];
-    if (boardElChilds) {
-        boardElChilds.forEach(square => {
-            square.remove()
-        })
-    }
+function init() {
+    initializeVariables();
+    startGame();
+}
+init()
 
-    for (let i = 0; i < rows; i++) {
-        gameBoard[i] = [];
-        for (let j = 0; j < columns; j++) {
-            gameBoard[i][j] = "";
-            const box = document.createElement("div");
-            box.className = "box";
-            box.id = `${i}-${j}`
-            box.textContent = gameBoard[i][j];
-            boardMainEl.appendChild(box);
-        }
-    }
-    boardMainEl.setAttribute('style','grid-template-columns: repeat(' + rows + ',calc(600px/' +rows+ ')');
+function startGame() {
+    resetBoard()
+    setUpTimer()
+    initializeBoard();
+
+    boardMainEl.setAttribute('style', 'grid-template-columns: repeat(' + rows + ',calc(600px/' + rows + ')');
     boardElChilds = document.querySelectorAll("#board>*")
 
-    winner = false
-    gameOver = false
-    flagCount = mineCount
-    seconds = 0
-    timerEl.innerText = "00"
-    clearInterval(timer)
     boardElChilds.forEach(square => {
         square.innerText = "";
         square.classList.remove("revealBox", "revealedBomb", "flag", "explodedBomb", "bombDefused")
@@ -68,14 +52,55 @@ function init(rows,columns,mineCount) {
         square.addEventListener('click', boxClickHandler)
         square.addEventListener('contextmenu', boxClickHandler)
     })
-    messageEl.innerText = "Try your luck"
-    minesLeftEl.innerText = 10
     addMines(gameBoard, boardElChilds)
-
 }
-init()
 
-function addMines(gameBoard,) {
+function initializeVariables() {
+    isFirstClick = true;
+    squaresReveal = 0;
+    gameBoard = [];
+    winner = false;
+    gameOver = false;
+    setUpTimer();
+    messageEl.innerText = "Choose your level!";
+}
+
+function setUpTimer() {
+    seconds = 0;
+    clearInterval(timer);
+    timerEl.innerText = "00";
+}
+
+function resetBoard() {
+    if (boardElChilds) {
+        boardElChilds.forEach(square => {
+            square.remove();
+        });
+    }
+}
+function resetGame() {
+    initializeVariables();
+    resetBoard();
+    boardMainEl.removeAttribute('style');
+    minesLeftEl.innerText="00"
+}
+
+
+function initializeBoard() {
+    for (let i = 0; i < rows; i++) {
+        gameBoard[i] = [];
+        for (let j = 0; j < columns; j++) {
+            gameBoard[i][j] = "";
+            const box = document.createElement("div");
+            box.className = "box";
+            box.id = `${i}-${j}`;
+            box.textContent = gameBoard[i][j];
+            boardMainEl.appendChild(box);
+        }
+    }
+}
+
+function addMines(gameBoard) {
 
     let mineAdded = 0
     while (mineAdded < mineCount) {
@@ -100,7 +125,6 @@ function addMines(gameBoard,) {
             }
         }
     }
-    console.log(gameBoard);
 }
 
 
@@ -153,7 +177,7 @@ function revealBox(eventId, gameBoard) {
 
 
 
-function addFlags(eventId, gameBoard) {
+function addFlags(eventId) {
     const rowIndex = parseInt((eventId).split("-")[0])
     const columnIndex = parseInt((eventId).split("-")[1])
     const actualBox = document.getElementById(`${rowIndex}-${columnIndex}`)
@@ -173,7 +197,7 @@ function addFlags(eventId, gameBoard) {
 
 
 function checkForWin() {
-    if (squaresReveal + mineCount === 64) {
+    if (squaresReveal + mineCount === (rows*columns)) {
         winner = true
         messageEl.innerText = "YOU WON, CONGRATULATIONS!"
 
@@ -226,33 +250,47 @@ function setBegginer() {
     rows = 9
     columns = 9
     mineCount = 10
+    flagCount = mineCount
+    messageEl.innerText = "Try Your Luck"
+    minesLeftEl.innerText = flagCount
     boardMainEl.classList.remove("intermediate-board")
     boardMainEl.classList.remove("advance-board")
     boardMainEl.classList.add("beginner-board")
-    init(rows,columns,mineCount)
+    startGame()
+
 }
 function setIntermediate() {
     rows = 16
     columns = 16
     mineCount = 40
+    flagCount = mineCount
+    messageEl.innerText = "Try Your Luck"
+    minesLeftEl.innerText = flagCount
+
     boardMainEl.classList.add("intermediate-board")
     boardMainEl.classList.remove("advance-board")
     boardMainEl.classList.remove("beginner-board")
-    init(rows,columns,mineCount)
+    startGame()
+
 }
 function setAdvance() {
     rows = 30
     columns = 30
     mineCount = 99
+    flagCount = mineCount
+    messageEl.innerText = "Try Your Luck"
+    minesLeftEl.innerText = flagCount
+
     boardMainEl.classList.remove("intermediate-board")
-    boardMainEl.classList.add("advance-board")
     boardMainEl.classList.remove("beginner-board")
-    init(rows,columns,mineCount)
+    boardMainEl.classList.add("advance-board")
+
+    startGame()
 }
 
 // /*----------------------------- Event Listeners -----------------------------*/
 
-resetButtonEl.addEventListener('click', init)
+resetButtonEl.addEventListener('click', resetGame)
 begginerButtonEl.addEventListener('click', setBegginer)
 intermediateButtonEl.addEventListener('click', setIntermediate)
 advanceButtonEl.addEventListener('click', setAdvance)
