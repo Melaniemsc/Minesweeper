@@ -123,7 +123,6 @@ function addMines(gameBoard) {
             }
         }
     }
-   console.log(gameBoard); 
 }
 
 
