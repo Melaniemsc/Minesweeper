@@ -1,5 +1,3 @@
-
-/*-------------------------------- Constants --------------------------------*/
 const boardMainEl = document.getElementById("board")
 const messageEl = document.querySelector("#message")
 const resetButtonEl = document.querySelector("#reset");
@@ -9,7 +7,7 @@ const begginerButtonEl = document.getElementById("beginner")
 const intermediateButtonEl = document.getElementById("intermediate")
 const advanceButtonEl = document.getElementById("advance")
 
-/*---------------------------- Variables (state) ----------------------------*/
+
 let mineCount
 let columns
 let rows
@@ -23,13 +21,6 @@ let seconds
 let isFirstClick
 let boardElChilds
 
-
-
-/*------------------------ Cached Element References ------------------------*/
-
-
-
-/*-------------------------------- Functions --------------------------------*/
 
 function init() {
     initializeVariables();
@@ -82,7 +73,7 @@ function resetGame() {
     initializeVariables();
     resetBoard();
     boardMainEl.removeAttribute('style');
-    minesLeftEl.innerText="00"
+    minesLeftEl.innerText = "00"
 }
 
 
@@ -125,6 +116,7 @@ function addMines(gameBoard) {
             }
         }
     }
+    console.log(gameBoard);
 }
 
 
@@ -181,12 +173,14 @@ function addFlags(eventId) {
     const rowIndex = parseInt((eventId).split("-")[0])
     const columnIndex = parseInt((eventId).split("-")[1])
     const actualBox = document.getElementById(`${rowIndex}-${columnIndex}`)
-    if (actualBox.classList.contains("revealBox") || actualBox.classList.contains("revealBoxNum")) {
+    if (actualBox.classList.contains("revealBox")) {
         return
     } else if (actualBox.classList.contains("flag")) {
+        actualBox.addEventListener('click', boxClickHandler)
         actualBox.classList.remove("flag");
         flagCount++
     } else {
+        actualBox.addEventListener('click', boxClickHandler)
         actualBox.classList.add("flag");
         flagCount--
     }
@@ -197,10 +191,10 @@ function addFlags(eventId) {
 
 
 function checkForWin() {
-    if (squaresReveal + mineCount === (rows*columns)) {
+    if (squaresReveal + mineCount === (rows * columns)) {
         winner = true
         messageEl.innerText = "YOU WON, CONGRATULATIONS!"
-
+        clearInterval(timer)
     }
 }
 
@@ -287,8 +281,6 @@ function setAdvance() {
 
     startGame()
 }
-
-// /*----------------------------- Event Listeners -----------------------------*/
 
 resetButtonEl.addEventListener('click', resetGame)
 begginerButtonEl.addEventListener('click', setBegginer)
