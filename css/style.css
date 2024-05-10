@@ -60,10 +60,10 @@ main {
   display: grid;
   margin: 25px;
   border: 25px black;
-  border-bottom: 10px solid #757575;
-  border-right: 10px solid #757575;
-  border-left: 10px solid #ebeaeb;
-  border-top: 10px solid #fdfcfd;
+  border-bottom: 10px solid #6d5c6f;
+  border-right: 10px solid #6d5c6f;
+  border-left: 10px solid #edc3ed;
+  border-top: 10px solid #fae5fa;
 }
 
 .box {
