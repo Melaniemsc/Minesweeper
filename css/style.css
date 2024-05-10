@@ -6,7 +6,6 @@ body {
   font-family: "Poetsen One", sans-serif;
   font-weight: 400;
   font-style: normal;
-
 }
 
 #container {
@@ -31,12 +30,15 @@ main {
   padding: 0 100px;
   width: 100%;
 }
-#flags-board,#timer-board{
-  display: flex;
 
+#flags-board,
+#timer-board {
+  display: flex;
 }
+
 #mines-left,
-#timer, #timerText{
+#timer,
+#timerText {
   padding: 5px;
   color: purple
 }
@@ -51,7 +53,6 @@ main {
 
 .advance-board {
   font-size: 18px;
-
 }
 
 #board {
@@ -89,7 +90,6 @@ main {
   background-size: contain;
   text-align: center;
   justify-content: center;
-
 }
 
 .explodedBomb {
@@ -100,8 +100,6 @@ main {
   background-size: contain;
   text-align: center;
   justify-content: center;
-
-
 }
 
 button {
@@ -125,7 +123,6 @@ button {
   background-size: contain;
   text-align: center;
   justify-content: center;
-
 }
 
 .bombDefused {
@@ -136,6 +133,4 @@ button {
   background-size: contain;
   text-align: center;
   justify-content: center;
-
-
 }

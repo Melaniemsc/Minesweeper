@@ -28,6 +28,7 @@ function init() {
 }
 init()
 
+
 function startGame() {
     resetBoard()
     setUpTimer()
@@ -46,6 +47,7 @@ function startGame() {
     addMines(gameBoard, boardElChilds)
 }
 
+
 function initializeVariables() {
     isFirstClick = true;
     squaresReveal = 0;
@@ -56,11 +58,13 @@ function initializeVariables() {
     messageEl.innerText = "Choose your level!";
 }
 
+
 function setUpTimer() {
     seconds = 0;
     clearInterval(timer);
     timerEl.innerText = "00";
 }
+
 
 function resetBoard() {
     if (boardElChilds) {
@@ -69,6 +73,8 @@ function resetBoard() {
         });
     }
 }
+
+
 function resetGame() {
     initializeVariables();
     resetBoard();
@@ -90,6 +96,7 @@ function initializeBoard() {
         }
     }
 }
+
 
 function addMines(gameBoard) {
 
@@ -116,9 +123,7 @@ function addMines(gameBoard) {
             }
         }
     }
-    console.log(gameBoard);
 }
-
 
 
 function revealBox(eventId, gameBoard) {
@@ -168,7 +173,6 @@ function revealBox(eventId, gameBoard) {
 }
 
 
-
 function addFlags(eventId) {
     const rowIndex = parseInt((eventId).split("-")[0])
     const columnIndex = parseInt((eventId).split("-")[1])
@@ -188,8 +192,6 @@ function addFlags(eventId) {
 }
 
 
-
-
 function checkForWin() {
     if (squaresReveal + mineCount === (rows * columns)) {
         winner = true
@@ -197,6 +199,7 @@ function checkForWin() {
         clearInterval(timer)
     }
 }
+
 
 function boxClickHandler(event) {
     const rowIndex = parseInt((event.target.id).split("-")[0])
@@ -213,6 +216,7 @@ function boxClickHandler(event) {
 
     }
 }
+
 
 function setGameOver(event) {
     gameOver = true
@@ -235,10 +239,13 @@ function setGameOver(event) {
     });
     return gameOver;
 }
+
+
 function increaseTimer() {
     seconds++
     timerEl.innerText = seconds
 }
+
 
 function setBegginer() {
     rows = 9
@@ -253,6 +260,8 @@ function setBegginer() {
     startGame()
 
 }
+
+
 function setIntermediate() {
     rows = 16
     columns = 16
@@ -267,6 +276,8 @@ function setIntermediate() {
     startGame()
 
 }
+
+
 function setAdvance() {
     rows = 30
     columns = 30
@@ -286,4 +297,3 @@ resetButtonEl.addEventListener('click', resetGame)
 begginerButtonEl.addEventListener('click', setBegginer)
 intermediateButtonEl.addEventListener('click', setIntermediate)
 advanceButtonEl.addEventListener('click', setAdvance)
-
