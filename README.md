@@ -34,7 +34,7 @@ If you touch a bomb it's instant game over, the timer will stop and the board wi
 ![Minesweeper game over due to bomb explosion ](./assets/GameOver.jpg)
 
 ### Winner
-you can declare yourself **the winner** if and only if you managed to unlock **ALL** the board without touching a single bomb in your game.
+You can declare yourself **the winner** if and only if you managed to unlock **ALL** the board without touching a single bomb in your game.
 
 
 ## Making of the Game
@@ -42,6 +42,7 @@ you can declare yourself **the winner** if and only if you managed to unlock **A
 The technologies used to make this game were **JavaScript, HTML and CSS**
 
 I am very happy with the result of this game, if you had told me a week ago that I could have made something like this I wouldn't have believed it.
+
 I remember choosing Minesweeper because I wanted "a bit of a challenge" and at the time the recursion seemed amazing and mindblowing, but honestly it didn't seem so complicated in the end.
 
 I do remember being stuck for a good part of the time on something that my code wasn't reading correctly and it turned out to be a silly thing that solved it, but the reaffirmation after it was solved that my logic and the way I wrote it did work correctly was spectacular.
