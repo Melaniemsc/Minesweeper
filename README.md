@@ -47,5 +47,3 @@ I remember choosing Minesweeper because I wanted "a bit of a challenge" and at t
 I do remember being stuck for a good part of the time on something that my code wasn't reading correctly and it turned out to be a silly thing that solved it, but the reaffirmation after it was solved that my logic and the way I wrote it did work correctly was spectacular.
 
 Thank you so much for stopping by to read all this and I hope you enjoy my game <3
-
-Translated with www.DeepL.com/Translator (free version)
