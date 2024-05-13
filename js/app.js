@@ -3,7 +3,7 @@ const messageEl = document.querySelector("#message")
 const resetButtonEl = document.querySelector("#reset");
 const minesLeftEl = document.querySelector("#mines-left")
 const timerEl = document.querySelector("#timer")
-const begginerButtonEl = document.getElementById("beginner")
+const beginnerButtonEl = document.getElementById("beginner")
 const intermediateButtonEl = document.getElementById("intermediate")
 const advanceButtonEl = document.getElementById("advance")
 
@@ -247,7 +247,7 @@ function increaseTimer() {
 }
 
 
-function setBegginer() {
+function setBeginner() {
     rows = 9
     columns = 9
     mineCount = 10
@@ -294,6 +294,6 @@ function setAdvance() {
 }
 
 resetButtonEl.addEventListener('click', resetGame)
-begginerButtonEl.addEventListener('click', setBegginer)
+beginnerButtonEl.addEventListener('click', setBeginner)
 intermediateButtonEl.addEventListener('click', setIntermediate)
 advanceButtonEl.addEventListener('click', setAdvance)
